@@ -29,4 +29,10 @@ while rodando:
         rodando = False
     else:
         print("\nOpção invalida! escolha 1 ou 3.")
+
+# Mecânica de alteração de jogadores no final de cada jogada válida:
+if simbolo_atual == "X":
+    simbolo_atual =="O"
+else:
+    simbolo_atual = "X"
      
