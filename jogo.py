@@ -33,4 +33,4 @@ while rodando:
     if simbolo_atual == "X":
        simbolo_atual == "O"
     else:
-       simbolo_atual == "X" 
+       simbolo_atual == "X"
