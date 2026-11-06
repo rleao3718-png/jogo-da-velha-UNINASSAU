@@ -79,7 +79,7 @@ while rodando:
 
 
 
-if opcao == "4":
+    if opcao == "4":
         rodando_campeonato_bot = True
 
         while rodando_campeonato_bot:
