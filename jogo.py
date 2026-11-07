@@ -245,7 +245,7 @@ while rodando:
     elif opcao == "6":
         print("\n=== ESTATÍSTICAS ===")
 
-        if total_partidas == 0 or total_partidas_bot == 0:
+        if total_partidas == 0 and total_partidas_bot == 0:
             print("\nNenhuma partida registrada.")
         
         else:
