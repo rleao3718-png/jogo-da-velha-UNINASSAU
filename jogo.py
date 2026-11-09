@@ -171,7 +171,31 @@ while rodando:
                     
 
 
-    #incompleta opção 2
+    elif opcao == "2":
+        rodando_partida_bot = True
+        venceu_bot = False
+        empatou_bot = False
+        simbolo_atual_bot = "X"
+        print ("\nNova Partida - Contra Bot.")
+
+        # Resetando o Tabuleiro
+         for i in range (3):
+             for j in range (3):
+                 tabuleiro[i][j] = " " 
+       
+       # Mostrando o Tabuleiro Inicial
+        print("\n 0  1  2")
+        print("  --------------")
+        for i in range(3):
+            print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+            print("  -------------")
+
+        while rodando_partida_bot:
+            if simbolo_atual_bot == "X":
+                # Turno do Jogador Humano
+                printr(f"\nSua vez (Jogador: X)")
+                escolha_linha = input("Escolha a linha (0, 1 ou 2.")
+     # 2 INCOMPLETA
 
 
 
