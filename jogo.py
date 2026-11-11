@@ -133,7 +133,7 @@ while rodando:
                     total_empates += 1
                     print("\nEmpate!")
 
-                #atualizando o placar e resetando tudo - jessica
+                # Atualizando o placar e resetando tudo - jessica
                 total_partidas += 1
                 venceu = False
                 empatou = False
@@ -149,7 +149,7 @@ while rodando:
                 if resposta == "0":
                     rodando_partida = False
 
-                #limpando o tabuleiro e resetando o simbolo atual - jessica
+                # Limpando o tabuleiro e resetando o simbolo atual - jessica
                 elif resposta == "1":
                     for i in range(3):
                         for j in range(3):
@@ -170,7 +170,7 @@ while rodando:
                     rodando_partida = False
                     
 
-    #Partida humano vs bot - Sarah
+    # Partida humano vs bot - Sarah
     elif opcao == "2":
         rodando_partida_bot = True
         venceu_bot = False
@@ -201,7 +201,7 @@ while rodando:
                 escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
                 escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
 
-                #Checando se a escolha é válida - Sarah 
+                # Checando se a escolha é válida - Sarah 
                
                 if ((escolha_linha != "0" andescolha_linha != "0" and escolha linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
                     print("\nEscolha inválida! Digite 0, 1 ou 2.")
@@ -210,7 +210,7 @@ while rodando:
                 escolha_linha = int(escolha_linha)
                 escolha_coluna = int(escolha_coluna)
 
-                #Checando se a casa está ocupada - Sarah
+                # Checando se a casa está ocupada - Sarah
                 
                 if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "0":
                     print("\nEssa casa já está ocupada! Escolha outra.")
@@ -219,6 +219,99 @@ while rodando:
                 tabuleiro[escolha_linha][escolha_coluna] = "X"
                 simbolo_atual_bot = "0"
        else:
+           # Turno do Bot ( Computador com Adversário - Regras Fixas )
+           print("\nTurno do Bot (0)... Pensando ...")
+
+           movimento_feito = False 
+
+           #  Passo 1: Verificar se o Bot pode vencer nesta jogada 
+           if movimento_feito == False:
+                for i in range(3):
+                    for j in range(3):
+                        if tabuleiro[i][j] == " " and movimento_feito == False: 
+                            tabuleiro[i][j] = "0"
+                            # Testa se o bor venceu com esse movimento 
+                            pc_venceu_teste = False 
+                             for i in range(3):
+                                 if tabuleiro[r][0] == "0" tabuleiro[r][1] == "0" tabuleiro[r][2] == "0":
+                                    pc_venceu_teste = True
+                             for c in range (3): 
+                                 if tabuleiro[0][c] == "0" and tabuleiro[1][c] == "0" and tabuleiro[2][c] == "0":
+                                     pc_venceu_teste = True
+                                 if tabuleiro[0][0] == "0" and tabuleiro[1][1] == "0" and tabuleiro[2][2] == "0":
+                                     pc_venceu_teste = True
+                                 if tabuleiro[0][2] == "0" and tabuleiro[1][1] == "0" and tabuleiro[2][0] == "0":
+                                     pc_venceu_teste = True
+
+                                 if pc_venceu_teste == True:
+                                     movimento_feito = True
+                                 else:
+                                     tabuleiro[i][j] = " " # Desfaz o teste se não ganhou 
+
+            # Passo 2: Se não venceu, verifica se precisa bloquear o humano ('X')
+            if movimentp_feio == False:
+                for i in range(3):
+                    for j in range(3):
+                        if tabuleiro[i][j] == " " and movimento_feito == False:
+                            tabuleiro[i][j] == "X"
+                            # Testa se o humano venceria aqui
+                            humano_venceu_teste = False
+                            for r in range(3):
+                                if tabuleiro[r][0] == "X" and tabuleiro[r][1] == "X" and tabuleiro[r][2] == "X":
+                                    humano_venceu_teste = True
+                            for c in range(3):
+                                if tabuleiro[0][c] == "X" and tabuleiro{1][c] == "X" and tabuleiro[2][c] == "X":
+                                    humano_venceu_teste = True
+                            if tabuleiro[0][0] == "X" and tabuleiro[1][1] == "X" and tabueliro[2][2] == "X" :
+                                humano_venceu_teste = True
+                            if tabuleiro[0][2] == "X" and tabuleiro[1][1] == "X" and tabuleiro[2][0] == "X":
+                                humano_venceu_teste = True
+
+                            tabuleiro[i][j] = " " # Reseta a casa 
+                            if humano_venceu_teste = True:
+                                tabuleiro[i][j] = "0" # Bloqueia o humano 
+                                movimento_feito = True
+
+             # Passo 3: Se não precisa atacar nem bloquear,ocupa a primeira casa livre
+             if movimento_feito == False:
+                 for i in range(3):
+                     for j in range(3):
+                         if tabuleiro[i][j] ==" " and movimento _feito == False:
+                             tabuleiro[i][j] = "0" 
+                             movimento_feito = True
+
+            simbolo_atual_bot = "X"
+
+            # Verificação autmática de empate usando for alinhado para contar casas vazias
+            vazias = 0
+            for i in range (3):
+                for j in range(3):
+                    if tabuleiro[i][j] == " ":
+                        vazias += 1
+
+            # Verificação de vitória usando laços for 
+            venceu_X_bot = False 
+            venceu_0_bot = False 
+
+            for i in range(3):
+                if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == "X" and tabuleiro[i][0] != " ":
+                    venceu_X_bot = True
+                if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == "0" and tabuleiro[i][0] != " ":
+                    veceu_0_bot = True
+                if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == "X" and tabuleiro[0][i] != " ":
+                    venceu_X_bot = True
+                if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == "0" and tabuleiro{0][i] != " ":
+                    venceu_0_bot = True
+
+          # A continuar - Sarah
+           
+
+
+
+
+
+
+           
             #placar dos jogadores - jessica
 placar_j_um = 0
 placar_j_dois = 0
