@@ -14,14 +14,6 @@ placar_bot = 0
 total_partidas_bot = 0
 total_empates_bot = 0
 
-# Sequência de vitórias - Sarah
-
-sequencia_atual = 0
-maior_sequencia = 0
-
-sequencia_atual_bot = 0
-maior_sequencia_bot = 0
-
 #representação do tabuleiro - marilia
 tabuleiro = [
     [" "," "," "],
@@ -130,21 +122,6 @@ while rodando:
             if venceu:
                     if simbolo_atual == "O":
                         placar_j_um += 1
-                        # INÍCIO DA ATUALIZAÇÃO DA SEQUÊNCIA - Sarah
-                        sequencia_atual += 1
-                        if sequencia_atual > maior_sequencia:
-                            maior_sequencia = sequencia_atual
-                        sequencia_atual_bot = 0 # zera a do outro modo se necessário, ou gerencia separado
-                        # FIM DA ATUALIZAÇÃO 
-                    else:
-                        placar_j_dois += 1
-                        # Como o Jogador 2 venceu, quebra a sequência do Jogador 1
-                        sequencia_atual = 0
-                else:
-                    total_empates += 1
-                    print("\nEmpate!")
-                    # Empate também quebra a sequência de vitórias seguidas
-                    sequencia_atual = 0
             
              #mostrando o tabuleiro final - jessica
             print("\n    0   1   2")
