@@ -1,3 +1,4 @@
+#arquivo criado pra não mexer no codigo principal enquanto a partida de bot ainda ta em criação - jessica
 #placar dos jogadores - jessica
 placar_j_um = 0
 placar_j_dois = 0
@@ -6,13 +7,19 @@ placar_j_dois = 0
 total_partidas = 0
 total_empates = 0
 
-#placar do jogador 1 e do bot - jessica
-placar_j_um_bot = 0
-placar_bot = 0
+#estatisticas do campeonato 3 
+vitorias_campeonato_3_j_um = 0
+vitorias_campeonato_3_j_dois = 0
+total_partidas_camp_3 = 0
+total_empates_camp_3 = 0
 
-#total de partidas e empates do jogador 1 e do bot - jessica
-total_partidas_bot = 0
-total_empates_bot = 0
+#estatisticas do campeonato 5
+vitorias_campeonato_5_j_um = 0
+vitorias_campeonato_5_j_dois = 0
+total_partidas_camp_5 = 0
+total_empates_camp_5 = 0
+
+
 
 #representação do tabuleiro - marilia
 tabuleiro = [
@@ -28,14 +35,12 @@ while rodando:
 
     print("\n=== JOGO DA VELHA ===")
     print("\n1. Jogar - 2 Jogadores")
-    print("2. Jogar - Contra Bot")
-    print("3. Campeonato - 2 Jogadores")
-    print("4. Campeonato - Contra Bot")
-    print("5. Ver Regras")
-    print("6. Estatísticas")
-    print("7. Sair")
+    print("2. Campeonato - 2 Jogadores")
+    print("3. Ver Regras")
+    print("4. Estatísticas")
+    print("5. Sair")
 
-    opcao = input("\nEscolha uma opção. Digite um número de 1 a 7: ")
+    opcao = input("\nEscolha uma opção. Digite um número de 1 a 5: ")
 
 
 
@@ -43,7 +48,13 @@ while rodando:
         rodando_partida = True
         venceu = False
         empatou = False
+        simbolo_atual = "X"
+        contador_partidas = 0
+        contador_rodadas = 0
         print("\nNova Partida - 2 Jogadores.")
+
+        contador_partidas += 1
+        print(f"\n=== Partida N. {contador_partidas} ===")
 
         #resetando o tabuleiro - marilia
         for i in range(3):
@@ -59,6 +70,8 @@ while rodando:
         
 
         while rodando_partida:
+            contador_rodadas += 1
+            print(f"\n--- Rodada N. {contador_rodadas} ---")
 
             #começando a partida - jessica
             print(f"\nÉ a vez do jogador {simbolo_atual}.")
@@ -68,6 +81,7 @@ while rodando:
             #checando se a escolha é válida - jessica
             if ((escolha_linha != "0" and escolha_linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
                 print("\nEscolha inválida! Digite 0, 1 ou 2.")
+                contador_rodadas -= 1
                 continue
 
             #convertendo a escolha pra inteiro - jessica
@@ -77,320 +91,7 @@ while rodando:
             #checando se a casa escolhida ta ocupada - jessica
             if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "O":
                 print("\nEssa casa já está ocupada! Escolha outra.")
-                continue
-
-            tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
-
-            #checando se houve empate - jessica
-            for i in range(3):
-                for j in range(3):
-                    if tabuleiro[i][j] == " ":
-                        break
-                    elif tabuleiro[i][j] != " " and i == 2 and j == 2:
-                        empatou = True
-
-            for i in range(3):
-                    #vitoria na horizontal - jessica
-                    if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == simbolo_atual and tabuleiro[i][0] != " ":
-                        print(f"\nO jogador {simbolo_atual} venceu!")
-                        venceu = True
-
-                    #vitoria na vertical
-                    if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == simbolo_atual and tabuleiro[0][i] != " ":
-                        print(f"\nO jogador {simbolo_atual} venceu!")
-                        venceu = True
-
-            #vitoria na diagonal - jessica
-            if tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == simbolo_atual and tabuleiro[0][0] != " ":
-                print(f"\nO jogador {simbolo_atual} venceu!")
-                venceu = True
-            if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == simbolo_atual and tabuleiro[0][2] != " ":
-                print(f"\nO jogador {simbolo_atual} venceu!")
-                venceu = True
-
-            #mostrando o tabuleiro final - jessica
-            print("\n    0   1   2")
-            print("  --------------")
-            for i in range(3):
-                print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
-                print("  -------------")
-
-            #trocando o simbolo do jogador atual - marilia
-            if simbolo_atual == "X":
-                   simbolo_atual = "O"
-            else:
-                   simbolo_atual = "X"
-
-            #checando se houve vitoria ou empate - jessica
-            if venceu or empatou:
-                if venceu:
-                    if simbolo_atual == "O":
-                        placar_j_um += 1
-                    else:
-                        placar_j_dois += 1
-
-                else:
-                    total_empates += 1
-                    print("\nEmpate!")
-
-                # Atualizando o placar e resetando tudo - jessica
-                total_partidas += 1
-                venceu = False
-                empatou = False
-
-                print("\n=== PLACAR ===")
-                print(f"\nJogador 1: {placar_j_um}")
-                print(f"Jogador 2: {placar_j_dois}")
-                print(f"Empates: {total_empates}")
-                print(f"Total de partidas: {total_partidas}")
-
-                resposta = (input("\nJogar novamente? Digite 0 para retornar ao Menu e 1 para jogar novamente: "))
-
-                if resposta == "0":
-                    rodando_partida = False
-
-                # Limpando o tabuleiro e resetando o simbolo atual - jessica
-                elif resposta == "1":
-                    for i in range(3):
-                        for j in range(3):
-                            tabuleiro[i][j] = " "
-
-                    simbolo_atual = "X"
-                    print("\n--- Nova partida ---")
-
-                    #mostrando o tabuleiro pra partida nova - jessica
-                    print("\n    0   1   2")
-                    print("  --------------")
-                    for i in range(3):
-                        print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
-                        print("  -------------")
-                
-                else:
-                    print("\nOpção inválida. Voltando ao menu.")
-                    rodando_partida = False
-                    
-
-    # Partida humano vs bot - Sarah
-    elif opcao == "2":
-        rodando_partida_bot = True
-        venceu_bot = False
-        empatou_bot = False
-        simbolo_atual_bot = "X"
-        print ("\nNova Partida - Contra Bot.")
-
-        # Resetando o Tabuleiro - Sarah
-        
-        for i in range (3):
-             for j in range (3):
-                 tabuleiro[i][j] = " " 
-       
-       # Mostrando o Tabuleiro Inicial - Sarah 
-        
-        print("\n 0  1  2")
-        print("  --------------")
-        for i in range(3):
-            print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
-            print("  -------------")
-
-        while rodando_partida_bot:
-            if simbolo_atual_bot == "X":
-                
-                # Turno do Jogador Humano - Sarah
-                
-                printr(f"\nSua vez (Jogador: X)")
-                escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
-                escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
-
-                # Checando se a escolha é válida - Sarah 
-               
-                if ((escolha_linha != "0" andescolha_linha != "0" and escolha linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
-                    print("\nEscolha inválida! Digite 0, 1 ou 2.")
-                    continue
-
-                escolha_linha = int(escolha_linha)
-                escolha_coluna = int(escolha_coluna)
-
-                # Checando se a casa está ocupada - Sarah
-                
-                if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "0":
-                    print("\nEssa casa já está ocupada! Escolha outra.")
-                    Continue
-
-                tabuleiro[escolha_linha][escolha_coluna] = "X"
-                simbolo_atual_bot = "0"
-       else:
-           # Turno do Bot ( Computador com Adversário - Regras Fixas )
-           print("\nTurno do Bot (0)... Pensando ...")
-
-           movimento_feito = False 
-
-           #  Passo 1: Verificar se o Bot pode vencer nesta jogada 
-           if movimento_feito == False:
-                for i in range(3):
-                    for j in range(3):
-                        if tabuleiro[i][j] == " " and movimento_feito == False: 
-                            tabuleiro[i][j] = "0"
-                            # Testa se o bor venceu com esse movimento 
-                            pc_venceu_teste = False 
-                             for i in range(3):
-                                 if tabuleiro[r][0] == "0" tabuleiro[r][1] == "0" tabuleiro[r][2] == "0":
-                                    pc_venceu_teste = True
-                             for c in range (3): 
-                                 if tabuleiro[0][c] == "0" and tabuleiro[1][c] == "0" and tabuleiro[2][c] == "0":
-                                     pc_venceu_teste = True
-                                 if tabuleiro[0][0] == "0" and tabuleiro[1][1] == "0" and tabuleiro[2][2] == "0":
-                                     pc_venceu_teste = True
-                                 if tabuleiro[0][2] == "0" and tabuleiro[1][1] == "0" and tabuleiro[2][0] == "0":
-                                     pc_venceu_teste = True
-
-                                 if pc_venceu_teste == True:
-                                     movimento_feito = True
-                                 else:
-                                     tabuleiro[i][j] = " " # Desfaz o teste se não ganhou 
-
-            # Passo 2: Se não venceu, verifica se precisa bloquear o humano ('X')
-            if movimentp_feio == False:
-                for i in range(3):
-                    for j in range(3):
-                        if tabuleiro[i][j] == " " and movimento_feito == False:
-                            tabuleiro[i][j] == "X"
-                            # Testa se o humano venceria aqui
-                            humano_venceu_teste = False
-                            for r in range(3):
-                                if tabuleiro[r][0] == "X" and tabuleiro[r][1] == "X" and tabuleiro[r][2] == "X":
-                                    humano_venceu_teste = True
-                            for c in range(3):
-                                if tabuleiro[0][c] == "X" and tabuleiro{1][c] == "X" and tabuleiro[2][c] == "X":
-                                    humano_venceu_teste = True
-                            if tabuleiro[0][0] == "X" and tabuleiro[1][1] == "X" and tabueliro[2][2] == "X" :
-                                humano_venceu_teste = True
-                            if tabuleiro[0][2] == "X" and tabuleiro[1][1] == "X" and tabuleiro[2][0] == "X":
-                                humano_venceu_teste = True
-
-                            tabuleiro[i][j] = " " # Reseta a casa 
-                            if humano_venceu_teste = True:
-                                tabuleiro[i][j] = "0" # Bloqueia o humano 
-                                movimento_feito = True
-
-             # Passo 3: Se não precisa atacar nem bloquear,ocupa a primeira casa livre
-             if movimento_feito == False:
-                 for i in range(3):
-                     for j in range(3):
-                         if tabuleiro[i][j] ==" " and movimento _feito == False:
-                             tabuleiro[i][j] = "0" 
-                             movimento_feito = True
-
-            simbolo_atual_bot = "X"
-
-            # Verificação autmática de empate usando for alinhado para contar casas vazias
-            vazias = 0
-            for i in range (3):
-                for j in range(3):
-                    if tabuleiro[i][j] == " ":
-                        vazias += 1
-
-            # Verificação de vitória usando laços for 
-            venceu_X_bot = False 
-            venceu_0_bot = False 
-
-            for i in range(3):
-                if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == "X" and tabuleiro[i][0] != " ":
-                    venceu_X_bot = True
-                if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == "0" and tabuleiro[i][0] != " ":
-                    veceu_0_bot = True
-                if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == "X" and tabuleiro[0][i] != " ":
-                    venceu_X_bot = True
-                if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == "0" and tabuleiro{0][i] != " ":
-                    venceu_0_bot = True
-
-          # A continuar - Sarah
-           
-
-
-
-
-
-
-           
-            #placar dos jogadores - jessica
-placar_j_um = 0
-placar_j_dois = 0
-
-#total de partidas e empates dos jogadores - jessica
-total_partidas = 0
-total_empates = 0
-
-#placar do jogador 1 e do bot - jessica
-placar_j_um_bot = 0
-placar_bot = 0
-
-#total de partidas e empates do jogador 1 e do bot - jessica
-total_partidas_bot = 0
-total_empates_bot = 0
-
-#representação do tabuleiro - marilia
-tabuleiro = [
-    [" "," "," "],
-    [" "," "," "],
-    [" "," "," "]
-]
-
-simbolo_atual = "X"
-rodando = True
-
-while rodando:
-
-    print("\n=== JOGO DA VELHA ===")
-    print("\n1. Jogar - 2 Jogadores")
-    print("2. Jogar - Contra Bot")
-    print("3. Campeonato - 2 Jogadores")
-    print("4. Campeonato - Contra Bot")
-    print("5. Ver Regras")
-    print("6. Estatísticas")
-    print("7. Sair")
-
-    opcao = input("\nEscolha uma opção. Digite um número de 1 a 7: ")
-
-
-
-    if opcao == "1":
-        rodando_partida = True
-        venceu = False
-        empatou = False
-        print("\nNova Partida - 2 Jogadores.")
-
-        #resetando o tabuleiro - marilia
-        for i in range(3):
-            for j in range(3):
-                tabuleiro[i][j] = " "
-
-        #mostrando o tabuleiro inicial - marilia
-        print("\n    0   1   2")
-        print("  --------------")
-        for i in range(3): 
-            print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
-            print("  -------------")
-        
-
-        while rodando_partida:
-
-            #começando a partida - jessica
-            print(f"\nÉ a vez do jogador {simbolo_atual}.")
-            escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
-            escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
-
-            #checando se a escolha é válida - jessica
-            if ((escolha_linha != "0" and escolha_linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
-                print("\nEscolha inválida! Digite 0, 1 ou 2.")
-                continue
-
-            #convertendo a escolha pra inteiro - jessica
-            escolha_linha = int(escolha_linha)
-            escolha_coluna = int(escolha_coluna)
-
-            #checando se a casa escolhida ta ocupada - jessica
-            if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "O":
-                print("\nEssa casa já está ocupada! Escolha outra.")
+                contador_rodadas -= 1
                 continue
 
             tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
@@ -470,7 +171,10 @@ while rodando:
                             tabuleiro[i][j] = " "
 
                     simbolo_atual = "X"
-                    print("\n--- Nova partida ---")
+                    contador_rodadas = 0
+                    
+                    contador_partidas += 1
+                    print(f"\n=== Partida N. {contador_partidas} ===")
 
                     #mostrando o tabuleiro pra partida nova - jessica
                     print("\n    0   1   2")
@@ -482,119 +186,351 @@ while rodando:
                 else:
                     print("\nOpção inválida. Voltando ao menu.")
                     rodando_partida = False
+
+
+
+    #incompleto
+    if opcao == "2":
+        rodando_campeonato = True
+
+        while rodando_campeonato:
+
+            print("\n=== CAMPEONATO - 2 JOGADORES ===")
+            print("\n0. Menu")
+            print("1. Melhor de 3")
+            print("2. Melhor de 5")
+
+            escolha_campeonato = input ("\nEscolha uma opção. Digite 0 para voltar ao Menu ou 1 e 2 para jogar: ")
+
+            if escolha_campeonato == "0":
+                rodando_campeonato = False
+
+            elif escolha_campeonato == "1":
+                print("\n=== MELHOR DE 3 ===")
+                simbolo_atual = "X"
+                campeonato_3 = True
+                venceu = False
+                empatou = False
+                contador_partidas_camp_3 = 0
+                contador_rodadas_camp_3 = 0
+
+                placar_j_um_camp_3 = 0
+                placar_j_dois_camp_3 = 0
+                empates_camp_3 = 0
+                partidas_camp_3 = 0
+
+                for i in range(3):
+                    for j in range(3):
+                        tabuleiro[i][j] = " "
+
+                contador_partidas_camp_3 += 1
+                print(f"\n=== Partida N. {contador_partidas_camp_3} ===")
+                
+                #mostrando o tabuleiro inicial - marilia
+                print("\n    0   1   2")
+                print("  --------------")
+                for i in range(3): 
+                    print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                    print("  -------------")
+                
+
+                while campeonato_3:
+                    contador_rodadas_camp_3 += 1
+                    print(f"\n--- Rodada N. {contador_rodadas_camp_3} ---")
                     
+                    #começando a partida - jessica
+                    print(f"\nÉ a vez do jogador {simbolo_atual}.")
+                    escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
+                    escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
 
-    #Partida humano vs bot - Sarah
-    elif opcao == "2":
-        rodando_partida_bot = True
-        venceu_bot = False
-        empatou_bot = False
-        simbolo_atual_bot = "X"
-        print ("\nNova Partida - Contra Bot.")
+                    #checando se a escolha é válida - jessica
+                    if ((escolha_linha != "0" and escolha_linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
+                        print("\nEscolha inválida! Digite 0, 1 ou 2.")
+                        contador_rodadas_camp_3 -= 1
+                        continue
 
-        # Resetando o Tabuleiro - Sarah
-        
-        for i in range (3):
-             for j in range (3):
-                 tabuleiro[i][j] = " " 
-       
-       # Mostrando o Tabuleiro Inicial - Sarah 
-        
-        print("\n 0  1  2")
-        print("  --------------")
-        for i in range(3):
-            print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
-            print("  -------------")
+                    #convertendo a escolha pra inteiro - jessica
+                    escolha_linha = int(escolha_linha)
+                    escolha_coluna = int(escolha_coluna)
 
-        while rodando_partida_bot:
-            if simbolo_atual_bot == "X":
-                
-                # Turno do Jogador Humano - Sarah
-                
-                printr(f"\nSua vez (Jogador: X)")
-                escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
-                escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
+                    #checando se a casa escolhida ta ocupada - jessica
+                    if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "O":
+                        print("\nEssa casa já está ocupada! Escolha outra.")
+                        contador_rodadas_camp_3 -= 1
+                        continue
 
-                #Checando se a escolha é válida - Sarah 
-               
-                if ((escolha_linha != "0" andescolha_linha != "0" and escolha linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
-                    print("\nEscolha inválida! Digite 0, 1 ou 2.")
-                    continue
+                    tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
 
-                escolha_linha = int(escolha_linha)
-                escolha_coluna = int(escolha_coluna)
+                    #checando se houve empate - jessica
+                    for i in range(3):
+                        for j in range(3):
+                            if tabuleiro[i][j] == " ":
+                                break
+                            elif tabuleiro[i][j] != " " and i == 2 and j == 2:
+                                empatou = True
 
-                #Checando se a casa está ocupada - Sarah
-                
-                if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "0":
-                    print("\nEssa casa já está ocupada! Escolha outra.")
-                    Continue
+                    for i in range(3):
+                            #vitoria na horizontal - jessica
+                            if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == simbolo_atual and tabuleiro[i][0] != " ":
+                                print(f"\nO jogador {simbolo_atual} venceu!")
+                                venceu = True
 
-                tabuleiro[escolha_linha][escolha_coluna] = "X"
-                simbolo_atual_bot = "0"
-       else:
+                            #vitoria na vertical
+                            if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == simbolo_atual and tabuleiro[0][i] != " ":
+                                print(f"\nO jogador {simbolo_atual} venceu!")
+                                venceu = True
+
+                    #vitoria na diagonal - jessica
+                    if tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == simbolo_atual and tabuleiro[0][0] != " ":
+                        print(f"\nO jogador {simbolo_atual} venceu!")
+                        venceu = True
+                    if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == simbolo_atual and tabuleiro[0][2] != " ":
+                        print(f"\nO jogador {simbolo_atual} venceu!")
+                        venceu = True
+
+                    #mostrando o tabuleiro final - jessica
+                    print("\n    0   1   2")
+                    print("  --------------")
+                    for i in range(3):
+                        print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                        print("  -------------")
+
+                    #trocando o simbolo do jogador atual - marilia
+                    if simbolo_atual == "X":
+                        simbolo_atual = "O"
+                    else:
+                        simbolo_atual = "X"
+
+                    #checando se houve vitoria ou empate - jessica
+                    if venceu or empatou:
+                        if venceu:
+                            if simbolo_atual == "O":
+                                placar_j_um_camp_3 += 1
+                            else:
+                                placar_j_dois_camp_3 += 1
+
+                        else:
+                            empates_camp_3 += 1
+                            print("\nEmpate!")
+
+                        #atualizando o placar e resetando tudo - jessica
+                        partidas_camp_3 += 1
+                        venceu = False
+                        empatou = False
+
+                        print("\n=== PLACAR ===")
+                        print(f"\nJogador 1: {placar_j_um_camp_3}")
+                        print(f"Jogador 2: {placar_j_dois_camp_3}")
+                        print(f"Empates: {empates_camp_3}")
+                        print(f"Total de partidas: {partidas_camp_3}")
+
+                        if placar_j_um_camp_3 == 2 or placar_j_dois_camp_3 == 2:
+                            print("\nCampeonato encerrado!")
+                            if placar_j_um_camp_3 == 2:
+                                print("\nO jogador 1 venceu o campeonato!")
+                                total_vitorias_j_um_camp_3 += 1
+                                total_partidas_camp_3 += 1
+                            else:
+                                print("\nO jogador 2 venceu o campeonato!")
+                                total_vitorias_j_dois_camp_3 += 1
+                                total_partidas_camp_3 += 1
+                            campeonato_3 = False
+
+                        elif partidas_camp_3 >= 3 and placar_j_um_camp_3 == placar_j_dois_camp_3:
+                            print("\nCampeonato encerrado!")
+                            print("\nO campeonato terminou empatado!")
+                            total_partidas_camp_3 += 1
+                            total_empates_camp_3 += 1
+                            campeonato_3 = False
+
+                        else:
+                            for i in range(3):
+                                for j in range(3):
+                                    tabuleiro[i][j] = " "
+                        
+                            simbolo_atual = "X"
+                            contador_rodadas_camp_3 = 0
+
+                            contador_partidas_camp_3 += 1
+                            print(f"\n=== Partida N. {contador_partidas_camp_3} ===")
+
+                            #mostrando o tabuleiro pra partida nova - jessica
+                            print("\n    0   1   2")
+                            print("  --------------")
+                            for i in range(3):
+                                print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                                print("  -------------")
+                            continue
 
 
-
-    #incompleto
-    if opcao == "3":
-        rodando_campeonato = True
-
-        while rodando_campeonato:
-
-            print("\n=== CAMPEONATO - 2 JOGADORES ===")
-            print("\n0. Menu")
-            print("1. Melhor de 3")
-            print("2. Melhor de 5")
-
-            escolha_campeonato = input ("\nEscolha uma opção. Digite 0 para voltar ao Menu ou 1 e 2 para jogar: ")
-
-            if escolha_campeonato == "0":
-                rodando_campeonato = False
-                continue
-
-            elif escolha_campeonato == "1":
-                print("\n=== MELHOR DE 3 ===")
-                rodando_campeonato = False
         
             elif escolha_campeonato == "2":
                 print("\n=== MELHOR DE 5 ===")
-                rodando_campeonato = False
+                simbolo_atual = "X"
+                campeonato_5 = True
+                venceu = False
+                empatou = False
+                contador_partidas_camp_5 = 0
+                contador_rodadas_camp_5 = 0
+
+                placar_j_um_camp_5 = 0
+                placar_j_dois_camp_5 = 0
+                empates_camp_5 = 0
+                partidas_camp_5 = 0
+
+                for i in range(3):
+                    for j in range(3):
+                        tabuleiro[i][j] = " "
+
+                contador_partidas_camp_5 += 1
+                print(f"\n=== Partida N. {contador_partidas_camp_5} ===")
+                
+                #mostrando o tabuleiro inicial - marilia
+                print("\n    0   1   2")
+                print("  --------------")
+                for i in range(3): 
+                    print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                    print("  -------------")
+                
+
+                while campeonato_5:
+                    contador_rodadas_camp_5 += 1
+                    print(f"\n--- Rodada N. {contador_rodadas_camp_5} ---")
+                    
+                    #começando a partida - jessica
+                    print(f"\nÉ a vez do jogador {simbolo_atual}.")
+                    escolha_linha = input("Escolha a linha (0, 1 ou 2): ")
+                    escolha_coluna = input("Escolha a coluna (0, 1 ou 2): ")
+
+                    #checando se a escolha é válida - jessica
+                    if ((escolha_linha != "0" and escolha_linha != "1" and escolha_linha != "2") or (escolha_coluna != "0" and escolha_coluna != "1" and escolha_coluna != "2")):
+                        print("\nEscolha inválida! Digite 0, 1 ou 2.")
+                        contador_rodadas_camp_5 -= 1
+                        continue
+
+                    #convertendo a escolha pra inteiro - jessica
+                    escolha_linha = int(escolha_linha)
+                    escolha_coluna = int(escolha_coluna)
+
+                    #checando se a casa escolhida ta ocupada - jessica
+                    if tabuleiro[escolha_linha][escolha_coluna] == "X" or tabuleiro[escolha_linha][escolha_coluna] == "O":
+                        print("\nEssa casa já está ocupada! Escolha outra.")
+                        contador_rodadas_camp_5 -= 1
+                        continue
+
+                    tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
+
+                    #checando se houve empate - jessica
+                    for i in range(3):
+                        for j in range(3):
+                            if tabuleiro[i][j] == " ":
+                                break
+                            elif tabuleiro[i][j] != " " and i == 2 and j == 2:
+                                empatou = True
+
+                    for i in range(3):
+                            #vitoria na horizontal - jessica
+                            if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == simbolo_atual and tabuleiro[i][0] != " ":
+                                print(f"\nO jogador {simbolo_atual} venceu!")
+                                venceu = True
+
+                            #vitoria na vertical
+                            if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == simbolo_atual and tabuleiro[0][i] != " ":
+                                print(f"\nO jogador {simbolo_atual} venceu!")
+                                venceu = True
+
+                    #vitoria na diagonal - jessica
+                    if tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == simbolo_atual and tabuleiro[0][0] != " ":
+                        print(f"\nO jogador {simbolo_atual} venceu!")
+                        venceu = True
+                    if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == simbolo_atual and tabuleiro[0][2] != " ":
+                        print(f"\nO jogador {simbolo_atual} venceu!")
+                        venceu = True
+
+                    #mostrando o tabuleiro final - jessica
+                    print("\n    0   1   2")
+                    print("  --------------")
+                    for i in range(3):
+                        print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                        print("  -------------")
+
+                    #trocando o simbolo do jogador atual - marilia
+                    if simbolo_atual == "X":
+                        simbolo_atual = "O"
+                    else:
+                        simbolo_atual = "X"
+
+                    #checando se houve vitoria ou empate - jessica
+                    if venceu or empatou:
+                        if venceu:
+                            if simbolo_atual == "O":
+                                placar_j_um_camp_5 += 1
+                            else:
+                                placar_j_dois_camp_5 += 1
+
+                        else:
+                            empates_camp_5 += 1
+                            print("\nEmpate!")
+
+                        #atualizando o placar e resetando tudo - jessica
+                        partidas_camp_5 += 1
+                        venceu = False
+                        empatou = False
+
+                        print("\n=== PLACAR ===")
+                        print(f"\nJogador 1: {placar_j_um_camp_5}")
+                        print(f"Jogador 2: {placar_j_dois_camp_5}")
+                        print(f"Empates: {empates_camp_5}")
+                        print(f"Total de partidas: {partidas_camp_5}")
+
+                        if placar_j_um_camp_5 == 3 or placar_j_dois_camp_5 == 3:
+                            print("\nCampeonato encerrado!")
+                            if placar_j_um_camp_5 == 3:
+                                print("\nO jogador 1 venceu o campeonato!")
+                                total_vitorias_j_um_camp_5 += 1
+                                total_partidas_camp_5 += 1
+                            else:
+                                print("\nO jogador 2 venceu o campeonato!")
+                                total_vitorias_j_dois_camp_5 += 1
+                                total_partidas_camp_5 += 1
+
+                            campeonato_5 = False
+
+                        elif partidas_camp_5 >= 5 and placar_j_um_camp_5 == placar_j_dois_camp_5:
+                            print("\nCampeonato encerrado!")
+                            print("\nO campeonato terminou empatado!")
+                            total_partidas_camp_5 += 1
+                            total_empates_camp_5 += 1
+                            campeonato_5 = False
+
+                        else:
+                            for i in range(3):
+                                for j in range(3):
+                                    tabuleiro[i][j] = " "
+                        
+                            simbolo_atual = "X"
+                            contador_rodadas_camp_5 = 0
+
+                            contador_partidas_camp_5 += 1
+                            print(f"\n=== Partida N. {contador_partidas_camp_5} ===")
+
+                            #mostrando o tabuleiro pra partida nova - jessica
+                            print("\n    0   1   2")
+                            print("  --------------")
+                            for i in range(3):
+                                print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
+                                print("  -------------")
+                            continue                
+                
+
+
+
         
-            else:
+            elif escolha_campeonato != "0" and escolha_campeonato != "1" and escolha_campeonato != "2":
                 print("\nEscolha inválida. Digite um número de 0 a 2.")
 
 
-    #incompleto
-    if opcao == "4":
-        rodando_campeonato_bot = True
-
-        while rodando_campeonato_bot:
-
-            print("\n=== CAMPEONATO - BOT ===")
-            print("\n0. Menu")
-            print("1. Melhor de 3")
-            print("2. Melhor de 5")
-
-            escolha_campeonato_bot = input ("\nEscolha uma opção. Digite 0 para voltar ao Menu ou 1 e 2 para jogar: ")
-
-            if escolha_campeonato_bot == "0":
-                rodando_campeonato_bot = False
-
-            elif escolha_campeonato_bot == "1":
-                print("\n=== MELHOR DE 3 ===")
-                rodando_campeonato_bot = False
-        
-            elif escolha_campeonato_bot == "2":
-                print("\n=== MELHOR DE 5 ===")
-                rodando_campeonato_bot = False
-        
-            else:
-                print("\nEscolha inválida. Digite um número de 0 a 2.")
-
-
-
-    elif opcao == "5":
+    elif opcao == "3":
         print("\n=== REGRAS ===")
         print("\nO jogo da velha é um jogo de tabuleiro simples, que pode ser jogado por duas pessoas. O objetivo do jogo é preencher uma grade de 3 por 3 com os símbolos 'X' e 'O'")
         print("\nO jogador deve posiciona-los de forma que um jogador consiga obter três símbolos iguais em linha reta, seja na horizontal, na vertical ou na diagonal, antes do outro jogador.")
@@ -603,10 +539,10 @@ while rodando:
 
 
     
-    elif opcao == "6":
+    elif opcao == "4":
         print("\n=== ESTATÍSTICAS ===")
 
-        if total_partidas == 0 and total_partidas_bot == 0:
+        if total_partidas == 0 and total_partidas_camp_3 == 0 and total_partidas_camp_5 == 0:
             print("\nNenhuma partida registrada.")
         
         else:
@@ -623,170 +559,35 @@ while rodando:
                 print(f"Total de Partidas: {total_partidas}")
                 print(f"Total de Empates: {total_empates}")
 
-            #as partidas de bot tão separadas porque senão da erro de divisão por zero caso só haja partidas de player registradas, e vice versa - jessica
-            if total_partidas_bot > 0:
-                porcentagem_j_um_bot = (placar_j_um_bot / total_partidas_bot) * 100
-                porcentagem_bot = (placar_bot / total_partidas_bot) * 100
-            
-                print("\n--- Contra Bot ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um_bot}")
-                print(f"Vitórias do Bot: {placar_bot}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_bot:.2f}%")
-                print(f"Porcentagem de Vitória - Bot: {porcentagem_bot:.2f}%")
-                print(f"Total de Partidas: {total_partidas_bot}")
-                print(f"Total de Empates: {total_empates_bot}")
+            if total_partidas_camp_3 > 0:
+                porcentagem_j_um_camp_3 = (vitorias_campeonato_3_j_um / total_partidas_camp_3) * 100
+                porcentagem_j_dois_camp_3 = (vitorias_campeonato_3_j_dois / total_partidas_camp_3) * 100
 
+                print("\n--- Campeonato Melhor de 3 ---")
+                print(f"\nVitórias do Jogador 1: {vitorias_campeonato_3_j_um}")
+                print(f"Vitórias do Jogador 2: {vitorias_campeonato_3_j_dois}")
+                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_camp_3:.2f}%")
+                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois_camp_3:.2f}%")
+                print(f"Total de Campeonatos: {total_partidas_camp_3}")
+                print(f"Total de Empates: {total_empates_camp_3}")
 
+            if total_partidas_camp_5 > 0:
+                porcentagem_j_um_camp_5 = (vitorias_campeonato_5_j_um / total_partidas_camp_5) * 100
+                porcentagem_j_dois_camp_5 = (vitorias_campeonato_5_j_dois / total_partidas_camp_5) * 100
 
-    elif opcao == "7":
-        print("\n=== ESTATÍSTICAS ===")
-
-        if total_partidas == 0 and total_partidas_bot == 0:
-            print("\nNenhuma partida registrada.")
-
-        else:
-            if total_partidas > 0:
-                porcentagem_j_um = (placar_j_um / total_partidas) * 100
-                porcentagem_j_dois = (placar_j_dois / total_partidas) * 100
-
-                print("\n--- 2 Jogadores ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um}")
-                print(f"Vitórias do Jogador 2: {placar_j_dois}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um:.2f}%")
-                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois:.2f}%")
-                print(f"Total de Partidas: {total_partidas}")
-                print(f"Total de Empates: {total_empates}")
-
-            if total_partidas_bot > 0:
-                porcentagem_j_um_bot = (placar_j_um_bot / total_partidas_bot) * 100
-                porcentagem_bot = (placar_bot / total_partidas_bot) * 100
-
-                print("\n--- Contra Bot ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um_bot}")
-                print(f"Vitórias do Bot: {placar_bot}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_bot:.2f}%")
-                print(f"Porcentagem de Vitória - Bot: {porcentagem_bot:.2f}%")
-                print(f"Total de Partidas: {total_partidas_bot}")
-                print(f"Total de Empates: {total_empates_bot}")
-
-        print("\nSaindo do jogo. Até mais!")
-        rodando = False
-
-
-    #escrito assim por estar dando erro de opção inválida quando voltava ao menu depois de um jogo - jessica
-    elif opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4" and opcao != "5" and opcao != "6" and opcao != "7":
-        print("\nOpção inválida! Escolha um número de 1 a 7.")
-    
-    
-
-
-
-    #incompleto
-    if opcao == "3":
-        rodando_campeonato = True
-
-        while rodando_campeonato:
-
-            print("\n=== CAMPEONATO - 2 JOGADORES ===")
-            print("\n0. Menu")
-            print("1. Melhor de 3")
-            print("2. Melhor de 5")
-
-            escolha_campeonato = input ("\nEscolha uma opção. Digite 0 para voltar ao Menu ou 1 e 2 para jogar: ")
-
-            if escolha_campeonato == "0":
-                rodando_campeonato = False
-                continue
-
-            elif escolha_campeonato == "1":
-                print("\n=== MELHOR DE 3 ===")
-                rodando_campeonato = False
-        
-            elif escolha_campeonato == "2":
-                print("\n=== MELHOR DE 5 ===")
-                rodando_campeonato = False
-        
-            else:
-                print("\nEscolha inválida. Digite um número de 0 a 2.")
-
-
-    #incompleto
-    if opcao == "4":
-        rodando_campeonato_bot = True
-
-        while rodando_campeonato_bot:
-
-            print("\n=== CAMPEONATO - BOT ===")
-            print("\n0. Menu")
-            print("1. Melhor de 3")
-            print("2. Melhor de 5")
-
-            escolha_campeonato_bot = input ("\nEscolha uma opção. Digite 0 para voltar ao Menu ou 1 e 2 para jogar: ")
-
-            if escolha_campeonato_bot == "0":
-                rodando_campeonato_bot = False
-
-            elif escolha_campeonato_bot == "1":
-                print("\n=== MELHOR DE 3 ===")
-                rodando_campeonato_bot = False
-        
-            elif escolha_campeonato_bot == "2":
-                print("\n=== MELHOR DE 5 ===")
-                rodando_campeonato_bot = False
-        
-            else:
-                print("\nEscolha inválida. Digite um número de 0 a 2.")
-
+                print("\n--- Campeonato Melhor de 5 ---")
+                print(f"\nVitórias do Jogador 1: {vitorias_campeonato_5_j_um}")
+                print(f"Vitórias do Jogador 2: {vitorias_campeonato_5_j_dois}")
+                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_camp_5:.2f}%")
+                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois_camp_5:.2f}%")
+                print(f"Total de Campeonatos: {total_partidas_camp_5}")
+                print(f"Total de Empates: {total_empates_camp_5}")
 
 
     elif opcao == "5":
-        print("\n=== REGRAS ===")
-        print("\nO jogo da velha é um jogo de tabuleiro simples, que pode ser jogado por duas pessoas. O objetivo do jogo é preencher uma grade de 3 por 3 com os símbolos 'X' e 'O'")
-        print("\nO jogador deve posiciona-los de forma que um jogador consiga obter três símbolos iguais em linha reta, seja na horizontal, na vertical ou na diagonal, antes do outro jogador.")
-        print("\nO primeiro jogador coloca o seu símbolo em uma das células vazias da grade. O segundo jogador então faz o mesmo, e os jogadores alternam até que todas as células sejam preenchidas ou um dos jogadores consiga completar uma linha, coluna ou diagonal com seus símbolos.")
-        print("\nSe um jogador conseguir obter três símbolos em linha reta, ele vence o jogo. Se todas as células forem preenchidas e nenhum dos jogadores conseguir completar uma linha reta, o jogo termina em empate.")
-
-
-    
-    elif opcao == "6":
         print("\n=== ESTATÍSTICAS ===")
 
-        if total_partidas == 0 and total_partidas_bot == 0:
-            print("\nNenhuma partida registrada.")
-        
-        else:
-            if total_partidas > 0:
-                #calculando a porcentagem de vitórias - jessica
-                porcentagem_j_um = (placar_j_um / total_partidas) * 100
-                porcentagem_j_dois = (placar_j_dois / total_partidas) * 100
-            
-                print("\n--- 2 Jogadores ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um}")
-                print(f"Vitórias do Jogador 2: {placar_j_dois}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um:.2f}%")
-                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois:.2f}%")
-                print(f"Total de Partidas: {total_partidas}")
-                print(f"Total de Empates: {total_empates}")
-
-            #as partidas de bot tão separadas porque senão da erro de divisão por zero caso só haja partidas de player registradas, e vice versa - jessica
-            if total_partidas_bot > 0:
-                porcentagem_j_um_bot = (placar_j_um_bot / total_partidas_bot) * 100
-                porcentagem_bot = (placar_bot / total_partidas_bot) * 100
-            
-                print("\n--- Contra Bot ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um_bot}")
-                print(f"Vitórias do Bot: {placar_bot}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_bot:.2f}%")
-                print(f"Porcentagem de Vitória - Bot: {porcentagem_bot:.2f}%")
-                print(f"Total de Partidas: {total_partidas_bot}")
-                print(f"Total de Empates: {total_empates_bot}")
-
-
-
-    elif opcao == "7":
-        print("\n=== ESTATÍSTICAS ===")
-
-        if total_partidas == 0 and total_partidas_bot == 0:
+        if total_partidas == 0 and total_partidas_camp_3 == 0 and total_partidas_camp_5 == 0:
             print("\nNenhuma partida registrada.")
 
         else:
@@ -802,24 +603,36 @@ while rodando:
                 print(f"Total de Partidas: {total_partidas}")
                 print(f"Total de Empates: {total_empates}")
 
-            if total_partidas_bot > 0:
-                porcentagem_j_um_bot = (placar_j_um_bot / total_partidas_bot) * 100
-                porcentagem_bot = (placar_bot / total_partidas_bot) * 100
+            if total_partidas_camp_3 > 0:
+                porcentagem_j_um_camp_3 = (vitorias_campeonato_3_j_um / total_partidas_camp_3) * 100
+                porcentagem_j_dois_camp_3 = (vitorias_campeonato_3_j_dois / total_partidas_camp_3) * 100
 
-                print("\n--- Contra Bot ---")
-                print(f"\nVitórias do Jogador 1: {placar_j_um_bot}")
-                print(f"Vitórias do Bot: {placar_bot}")
-                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_bot:.2f}%")
-                print(f"Porcentagem de Vitória - Bot: {porcentagem_bot:.2f}%")
-                print(f"Total de Partidas: {total_partidas_bot}")
-                print(f"Total de Empates: {total_empates_bot}")
+                print("\n--- Campeonato Melhor de 3 ---")
+                print(f"\nVitórias do Jogador 1: {vitorias_campeonato_3_j_um}")
+                print(f"Vitórias do Jogador 2: {vitorias_campeonato_3_j_dois}")
+                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_camp_3:.2f}%")
+                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois_camp_3:.2f}%")
+                print(f"Total de Campeonatos: {total_partidas_camp_3}")
+                print(f"Total de Empates: {total_empates_camp_3}")
+
+            if total_partidas_camp_5 > 0:
+                porcentagem_j_um_camp_5 = (vitorias_campeonato_5_j_um / total_partidas_camp_5) * 100
+                porcentagem_j_dois_camp_5 = (vitorias_campeonato_5_j_dois / total_partidas_camp_5) * 100
+
+                print("\n--- Campeonato Melhor de 5 ---")
+                print(f"\nVitórias do Jogador 1: {vitorias_campeonato_5_j_um}")
+                print(f"Vitórias do Jogador 2: {vitorias_campeonato_5_j_dois}")
+                print(f"Porcentagem de Vitória - Jogador 1: {porcentagem_j_um_camp_5:.2f}%")
+                print(f"Porcentagem de Vitória - Jogador 2: {porcentagem_j_dois_camp_5:.2f}%")
+                print(f"Total de Campeonatos: {total_partidas_camp_5}")
+                print(f"Total de Empates: {total_empates_camp_5}")
+
+            
 
         print("\nSaindo do jogo. Até mais!")
         rodando = False
 
 
     #escrito assim por estar dando erro de opção inválida quando voltava ao menu depois de um jogo - jessica
-    elif opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4" and opcao != "5" and opcao != "6" and opcao != "7":
-        print("\nOpção inválida! Escolha um número de 1 a 7.")
-    
-    
+    elif opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4" and opcao != "5":
+        print("\nOpção inválida! Escolha um número de 1 a 5.")
