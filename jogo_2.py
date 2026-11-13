@@ -1,4 +1,3 @@
-#arquivo criado pra não mexer no codigo principal enquanto a partida de bot ainda ta em criação - jessica
 #placar dos jogadores - jessica
 placar_j_um = 0
 placar_j_dois = 0
