@@ -97,12 +97,14 @@ while rodando:
             tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
 
             #checando se houve empate - jessica
+            empatou = True
             for i in range(3):
                 for j in range(3):
                     if tabuleiro[i][j] == " ":
+                        empatou = False
                         break
-                    elif tabuleiro[i][j] != " " and i == 2 and j == 2:
-                        empatou = True
+                if not empatou:
+                    break
 
             for i in range(3):
                     #vitoria na horizontal - jessica
@@ -130,6 +132,8 @@ while rodando:
                 print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
                 print("  -------------")
 
+            jogador_vencedor = simbolo_atual
+
             #trocando o simbolo do jogador atual - marilia
             if simbolo_atual == "X":
                    simbolo_atual = "O"
@@ -139,7 +143,7 @@ while rodando:
             #checando se houve vitoria ou empate - jessica
             if venceu or empatou:
                 if venceu:
-                    if simbolo_atual == "O":
+                    if jogador_vencedor == "X":
                         placar_j_um += 1
                     else:
                         placar_j_dois += 1
@@ -262,12 +266,14 @@ while rodando:
                     tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
 
                     #checando se houve empate - jessica
+                    empatou = True
                     for i in range(3):
                         for j in range(3):
                             if tabuleiro[i][j] == " ":
+                                empatou = False
                                 break
-                            elif tabuleiro[i][j] != " " and i == 2 and j == 2:
-                                empatou = True
+                        if not empatou:
+                            break
 
                     for i in range(3):
                             #vitoria na horizontal - jessica
@@ -295,6 +301,8 @@ while rodando:
                         print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
                         print("  -------------")
 
+                    jogador_vencedor = simbolo_atual
+
                     #trocando o simbolo do jogador atual - marilia
                     if simbolo_atual == "X":
                         simbolo_atual = "O"
@@ -304,7 +312,7 @@ while rodando:
                     #checando se houve vitoria ou empate - jessica
                     if venceu or empatou:
                         if venceu:
-                            if simbolo_atual == "O":
+                            if jogador_vencedor == "X":
                                 placar_j_um_camp_3 += 1
                             else:
                                 placar_j_dois_camp_3 += 1
@@ -421,12 +429,14 @@ while rodando:
                     tabuleiro[escolha_linha][escolha_coluna] = simbolo_atual
 
                     #checando se houve empate - jessica
+                    empatou = True
                     for i in range(3):
                         for j in range(3):
                             if tabuleiro[i][j] == " ":
+                                empatou = False
                                 break
-                            elif tabuleiro[i][j] != " " and i == 2 and j == 2:
-                                empatou = True
+                        if not empatou:
+                            break
 
                     for i in range(3):
                             #vitoria na horizontal - jessica
@@ -454,6 +464,8 @@ while rodando:
                         print(f"{i} | {tabuleiro[i][0]} | {tabuleiro[i][1]} | {tabuleiro[i][2]} |")
                         print("  -------------")
 
+                    jogador_vencedor = simbolo_atual
+
                     #trocando o simbolo do jogador atual - marilia
                     if simbolo_atual == "X":
                         simbolo_atual = "O"
@@ -463,7 +475,7 @@ while rodando:
                     #checando se houve vitoria ou empate - jessica
                     if venceu or empatou:
                         if venceu:
-                            if simbolo_atual == "O":
+                            if jogador_vencedor == "X":
                                 placar_j_um_camp_5 += 1
                             else:
                                 placar_j_dois_camp_5 += 1
