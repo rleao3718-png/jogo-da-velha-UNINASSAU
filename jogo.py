@@ -336,11 +336,11 @@ while rodando:
                             print("\nCampeonato encerrado!")
                             if placar_j_um_camp_3 == 2:
                                 print("\nO jogador 1 venceu o campeonato!")
-                                total_vitorias_j_um_camp_3 += 1
+                                vitorias_campeonato_3_j_um += 1
                                 total_partidas_camp_3 += 1
                             else:
                                 print("\nO jogador 2 venceu o campeonato!")
-                                total_vitorias_j_dois_camp_3 += 1
+                                vitorias_campeonato_3_dois += 1
                                 total_partidas_camp_3 += 1
                             campeonato_3 = False
 
@@ -499,11 +499,11 @@ while rodando:
                             print("\nCampeonato encerrado!")
                             if placar_j_um_camp_5 == 3:
                                 print("\nO jogador 1 venceu o campeonato!")
-                                total_vitorias_j_um_camp_5 += 1
+                                vitorias_campeonato_5_j_um += 1
                                 total_partidas_camp_5 += 1
                             else:
                                 print("\nO jogador 2 venceu o campeonato!")
-                                total_vitorias_j_dois_camp_5 += 1
+                                vitorias_campeonato_5_j_dois += 1
                                 total_partidas_camp_5 += 1
 
                             campeonato_5 = False
